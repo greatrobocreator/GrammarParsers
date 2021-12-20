@@ -279,9 +279,11 @@ EarleyParser &EarleyParser::Fit(const Grammar &_g) {
 
 bool EarleyParser::Predict(const std::string &word) const {
 
+  /// D[i] sets of configurations from algorithm
   std::vector<std::vector<Configuration> >
       configurations(word.size() + 1, std::vector<Configuration>());
 
+  /// Also D[i] sets but in hash table for fast contains-checking
   std::vector<std::unordered_set<Configuration> >
       configurations_set(word.size() + 1, std::unordered_set<Configuration>());
 

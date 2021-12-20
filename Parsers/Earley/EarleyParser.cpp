@@ -100,6 +100,7 @@ std::vector<Configuration> EarleyParser::Complete(
   }
   return new_configs;
 }
+
 void EarleyParser::InsertConfigurations(std::vector<Configuration> &configurations,
                                         std::unordered_set<
                                             Configuration> &configurations_set,
@@ -108,6 +109,7 @@ void EarleyParser::InsertConfigurations(std::vector<Configuration> &configuratio
     InsertConfiguration(configurations, configurations_set, conf);
   }
 }
+
 void EarleyParser::InsertConfiguration(std::vector<Configuration> &configurations,
                                        std::unordered_set<
                                            Configuration> &configurations_set,
