@@ -56,7 +56,6 @@ class Grammar {
 
   char start;
 
-  //bool dfs(char v, std::unordered_set<char> &used);
 };
 
 std::istream &operator>>(std::istream &in, Grammar &g);

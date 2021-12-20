@@ -113,10 +113,6 @@ void EarleyParser::InsertConfiguration(std::vector<Configuration> &configuration
                                            Configuration> &configurations_set,
                                        const Configuration &to_insert) {
   if (configurations_set.count(to_insert) > 0) {
-    /*if (to_insert.NextChar() == Rule::epsilon
-        && to_insert.rule.from != fake_start) {
-      configurations.push_back(to_insert);
-    }*/
     return;
   }
   configurations.push_back(to_insert);

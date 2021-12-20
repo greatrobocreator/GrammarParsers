@@ -121,29 +121,6 @@ void Grammar::PrecalcEpsilonNonTerminals() {
   }
 }
 
-/*bool Gramma::dfs(char v, std::unordered_set<char> &used) {
-  used.insert(v);
-  //bool flag = false;
-  for (const auto &rule : rules[v]) {
-    bool flag = true;
-    for (const auto &c: rule.to) {
-      if (IsNonTerminal(c) && used.count(c) <= 0) {
-        if (!dfs(c, used)) {
-          flag = false;
-        }
-      }
-    }
-    if (rule.to.empty() || flag) {
-      epsilon_non_terminals.insert(v);
-      return true;
-    }
-  }
-  /*if (flag) {
-    epsilon_non_terminals.insert(v);
-  }*
-  return false;
-}*/
-
 bool Grammar::IsEpsilonNonTerminal(char c) const {
   return epsilon_non_terminals.count(c) > 0;
 }

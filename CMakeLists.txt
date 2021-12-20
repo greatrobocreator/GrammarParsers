@@ -16,3 +16,5 @@ add_executable(EarleyParser main.cpp
         Parsers/Parser.cpp Parsers/Parser.h)
 
 target_include_directories(EarleyParser PRIVATE Parsers Parsers/Earley)
+
+add_executable(EarleyInOneFile earley_in_one_file.cpp)
