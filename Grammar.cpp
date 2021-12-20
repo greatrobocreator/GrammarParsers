@@ -1,4 +1,5 @@
 #include <sstream>
+#include <queue>
 #include "Grammar.h"
 
 std::istream &operator>>(std::istream &in, Rule &rule) {
@@ -86,30 +87,62 @@ void Grammar::SetStart(char start) {
 }
 void Grammar::PrecalcEpsilonNonTerminals() {
   epsilon_non_terminals.clear();
-  std::unordered_set<char> used;
-  dfs(start, used);
-}
 
-bool Grammar::dfs(char v, std::unordered_set<char> &used) {
-  used.insert(v);
-  bool flag = false;
-  for (const auto &rule : rules[v]) {
-    for (const auto &c: rule.to) {
-      if (IsNonTerminal(c) && used.count(c) <= 0) {
-        if (dfs(c, used)) {
-          flag = true;
+  std::queue<char> queue;
+  for (const auto &c: non_terminals) {
+    for (const auto &rule: rules[c]) {
+      if (rule.to.empty()) {
+        queue.push(c);
+        break;
+      }
+    }
+  }
+  while (!queue.empty()) {
+    char c = queue.front();
+    queue.pop();
+    epsilon_non_terminals.insert(c);
+    for (const auto &d: non_terminals) {
+      if (epsilon_non_terminals.count(d) > 0) continue;
+      for (const auto &rule: rules[d]) {
+        bool is_epsilon_gen = true;
+        for (const auto &to: rule.to) {
+          if (epsilon_non_terminals.count(to) <= 0) {
+            is_epsilon_gen = false;
+            break;
+          }
+        }
+        if (is_epsilon_gen) {
+          epsilon_non_terminals.insert(d);
+          queue.push(d);
+          break;
         }
       }
     }
-    if (rule.to.empty()) {
-      flag = true;
+  }
+}
+
+/*bool Gramma::dfs(char v, std::unordered_set<char> &used) {
+  used.insert(v);
+  //bool flag = false;
+  for (const auto &rule : rules[v]) {
+    bool flag = true;
+    for (const auto &c: rule.to) {
+      if (IsNonTerminal(c) && used.count(c) <= 0) {
+        if (!dfs(c, used)) {
+          flag = false;
+        }
+      }
+    }
+    if (rule.to.empty() || flag) {
+      epsilon_non_terminals.insert(v);
+      return true;
     }
   }
-  if (flag) {
+  /*if (flag) {
     epsilon_non_terminals.insert(v);
-  }
-  return flag;
-}
+  }*
+  return false;
+}*/
 
 bool Grammar::IsEpsilonNonTerminal(char c) const {
   return epsilon_non_terminals.count(c) > 0;
