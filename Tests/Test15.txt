@@ -1,0 +1,12 @@
+1 2 2
+S
+fo
+S->Sfoo
+S->
+S
+5
+foo
+foofoo
+foofoofoo
+foofoofoofoo
+foofoofoofoofoo
